@@ -21,6 +21,26 @@ const userSchema = new Schema({
     type: Boolean,
     require: true,
   },
+  followers: {
+    type: [Schema.Types.ObjectId],
+  },
+  follows: {
+    type: [Schema.Types.ObjectId],
+  },
+  reports: {
+    type: [Schema.Types.ObjectId],
+  },
+  favorites: {
+    type: [Schema.Types.ObjectId],
+  },
+  isPremium: {
+    type: Boolean,
+    require: true,
+  },
+  wasBanned: {
+    type: Boolean,
+    require: true,
+  },
 });
 
 //Hash password before save the user

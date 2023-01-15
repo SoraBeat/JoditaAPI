@@ -30,7 +30,7 @@ export const getUser = async (req, res) => {
 };
 
 export const postUser = async (req, res) => {
-  const { email, password, userName, isAdmin } = req.body;
+  const { email, password, userName, isAdmin, isPremium, wasBanned } = req.body;
   try {
     //Verify if email is alredy registered
     let user = await User.findOne({ email });
@@ -40,7 +40,14 @@ export const postUser = async (req, res) => {
     if (user) throw { code: 11001 };
 
     //Save in database
-    user = new User({ email, password, userName, isAdmin });
+    user = new User({
+      email,
+      password,
+      userName,
+      isAdmin,
+      isPremium,
+      wasBanned,
+    });
     await user.save();
 
     return res
@@ -59,12 +66,14 @@ export const postUser = async (req, res) => {
 
 export const putUser = async (req, res) => {
   const { userId } = req.params;
-  const { email, password, userName, isAdmin } = req.body;
+  const { email, password, userName, isAdmin, isPremium, wasBanned } = req.body;
 
   try {
     let dataToSend = {
       password,
       isAdmin,
+      isPremium,
+      wasBanned,
     };
     let user = await User.findById(userId);
 
@@ -111,6 +120,48 @@ export const deleteUser = async (req, res) => {
       message: `
   the user ${userId} was deleted successfully`,
     });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Server error" });
+  }
+};
+
+export const getUsersPublic = async (req, res) => {
+  try {
+    //Filter the result according to query params
+    const { search = "", skip = 0, limit = 0 } = req.query;
+    let queryParams = {
+      userName: { $regex: search, $options: "i" },
+      wasBanned: false,
+      isAdmin: false,
+    };
+    const users = await User.find(queryParams).limit(limit).skip(skip);
+
+    //Sort array
+    const sortedArray = await users.sort((u1, u2) =>
+      u1.isPremium < u2.isPremium ? 1 : u1.isPremium > u2.isPremium ? -1 : 0
+    );
+    //Delete sensitive data
+    const userWithoutPass = await sortedArray.map((us) => {
+      us.password = "Nothing to see here xd";
+      return us;
+    });
+
+    return res
+      .status(200)
+      .send({ data: userWithoutPass, message: "successfully" });
+  } catch (error) {
+    return res.status(500).json({ error: "Server error" });
+  }
+};
+
+export const getUserPublic = async (req, res) => {
+  try {
+    //Find the user
+    const { userId } = req.params;
+    const user = await User.findById(userId);
+    user.password = "Nothing to see here xd";
+    return res.status(200).json({ data: user, message: "successfully" });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "Server error" });
