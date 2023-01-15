@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
 import authRouter from "./routes/auth.route.js";
 import userRouter from "./routes/user.route.js";
+import userRouterPublic from "./routes/user.public.route.js";
 import "./database/connectMongo.js";
 
 //Initial config
@@ -19,8 +20,9 @@ const limiter = rateLimit({
 app.use(limiter);
 app.use(express.json());
 app.use(cookieParser());
-app.use("/api", authRouter);
-app.use("/api", userRouter);
+app.use("/api/public", authRouter);
+app.use("/api/private", userRouter);
+app.use("/api/public", userRouterPublic);
 
 //MongoDB Conecction
 app.get("/", (req, res) => res.send("Bienvenido a mi API"));

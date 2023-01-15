@@ -51,6 +51,7 @@ router.post(
     body("password", "Minimum 6 characters").trim().isLength({ min: 6 }),
     body("password", "Maximum 20 characters").trim().isLength({ max: 20 }),
     body("isAdmin", "IsAdmin value has to be Boolean").isBoolean().exists(),
+    body("isPremium", "isPremium value has to be Boolean").isBoolean().exists(),
     requireToken,
     requireAdminPermissions,
   ],
@@ -81,6 +82,7 @@ router.put(
     body("password", "Minimum 6 characters").trim().isLength({ min: 6 }),
     body("password", "Maximum 20 characters").trim().isLength({ max: 20 }),
     body("isAdmin", "IsAdmin value has to be Boolean").isBoolean().exists(),
+    body("isPremium", "isPremium value has to be Boolean").isBoolean().exists(),
     query("userId")
       .trim()
       .isLength({ isLength: 24 })

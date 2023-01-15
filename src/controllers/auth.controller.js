@@ -3,6 +3,8 @@ import { generateToken } from "../utils/tokenManager.js";
 
 export const register = async (req, res) => {
   const isAdmin = false;
+  const isPremium = false;
+  const wasBanned = false;
   const { email, password, userName } = req.body;
   try {
     //Verify if email is alredy registered
@@ -13,7 +15,7 @@ export const register = async (req, res) => {
     if (user) throw { code: 11001 };
 
     //Save in database
-    user = new User({ email, password, userName, isAdmin });
+    user = new User({ email, password, userName, isAdmin, isPremium,wasBanned });
     user.save();
 
     return res.status(201).json({ ok: true });
@@ -43,7 +45,7 @@ export const login = async (req, res) => {
 
     //jwt
     const { token, expiresIn } = generateToken({ uid: user.id });
-    
+
     //Configuracion cookie
     res.cookie("token", token, {
       httpOnly: true,
