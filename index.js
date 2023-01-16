@@ -26,13 +26,13 @@ app.use(cors());
 app.use(limiter);
 app.use(express.json());
 app.use(cookieParser());
-app.use("/api/private", userRouter); //listo
-app.use("/api/private", premiumRouter); //listo
-app.use("/api/private", reportRouter);
-app.use("/api/public", authRouterPublic); //listo
-app.use("/api/public", userRouterPublic); //listo
-app.use("/api/public", followRouterPublic); //listo
-app.use("/api/public", reportRouterPublic);
+app.use("/api/private", userRouter); 
+app.use("/api/private", premiumRouter); 
+app.use("/api/private", reportRouter); 
+app.use("/api/public", authRouterPublic); 
+app.use("/api/public", userRouterPublic); 
+app.use("/api/public", followRouterPublic); 
+app.use("/api/public", reportRouterPublic); 
 
 //MongoDB Conecction
 app.get("/", (req, res) => res.send("API Jodita"));
