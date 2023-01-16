@@ -50,7 +50,6 @@ export const unfollow = async (req, res) => {
     let newArray = await userFrom.follows.filter((u) => !u.equals(userTo.id));
     userFrom.follows = newArray;
     await userFrom.save();
-    console.log(newArray);
 
     //Verify if alredy is follower
     let checkUserTo = await userTo.followers.includes(fromId);
