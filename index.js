@@ -39,6 +39,6 @@ app.use("/api/public", reportRouterPublic);
 
 //MongoDB Conecction
 app.get("/", (req, res) =>
-  res.sendFile(path.join(__dirname, "./", "index.html"))
+  res.sendFile(path.join(__dirname, "./index.html"))
 );
 app.listen(port, () => console.log(`Api escuchando en puerto: ${port} ...`));
