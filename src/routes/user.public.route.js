@@ -2,7 +2,6 @@ import { Router } from "express";
 import { query } from "express-validator";
 import validationResultExpress from "../middlewares/validationResultExpress.js";
 import { requireToken } from "../middlewares/requireToken.js";
-import { requireAdminPermissions } from "../middlewares/requireAdminPermission.js";
 
 import {
   getUserPublic,
