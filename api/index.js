@@ -2,12 +2,12 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
-import userRouter from "./src/routes/user.route.js";
-import premiumRouter from "./src/routes/premium.route.js";
-import authRouterPublic from "./src/routes/auth.route.js";
-import userRouterPublic from "./src/routes/user.public.route.js";
-import followRouterPublic from "./src/routes/follow.public.route.js";
-import "./src/database/connectMongo.js";
+import userRouter from "../src/routes/user.route.js";
+import premiumRouter from "../src/routes/premium.route.js";
+import authRouterPublic from "../src/routes/auth.route.js";
+import userRouterPublic from "../src/routes/user.public.route.js";
+import followRouterPublic from "../src/routes/follow.public.route.js";
+import "../src/database/connectMongo.js";
 
 //Initial config
 const app = express();
