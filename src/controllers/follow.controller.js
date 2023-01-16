@@ -1,9 +1,11 @@
 import { User } from "../models/user.js";
+import { getTokenPayload } from "../utils/tokenManager.js";
 
 export const follow = async (req, res) => {
-  const { fromId, toId } = req.body;
-
   try {
+    const { userId: toId } = req.body;
+    const { uid: fromId } = await getTokenPayload(req.cookies.token);
+    if (toId === fromId) throw { code: 15001 };
     let userFrom = await User.findById(fromId);
     let userTo = await User.findById(toId);
     //Verify if alredy follow
@@ -31,6 +33,11 @@ export const follow = async (req, res) => {
           "Data trancking error, the other person already has you as a follower",
       });
     }
+    if (error.code === 15001) {
+      return res.status(400).json({
+        error: "You cant follow yourself.",
+      });
+    }
     return res
       .status(500)
       .json({ error: "Server error, check if the ID´s are OK" });
@@ -38,9 +45,10 @@ export const follow = async (req, res) => {
 };
 
 export const unfollow = async (req, res) => {
-  const { fromId, toId } = req.body;
-
   try {
+    const { userId: toId } = req.body;
+    const { uid: fromId } = await getTokenPayload(req.cookies.token);
+    if (toId === fromId) throw { code: 15001 };
     let userFrom = await User.findById(fromId);
     let userTo = await User.findById(toId);
 
@@ -69,6 +77,11 @@ export const unfollow = async (req, res) => {
       return res.status(400).json({
         error:
           "Data trancking error, the other person already doesnt has you as a follower",
+      });
+    }
+    if (error.code === 15001) {
+      return res.status(400).json({
+        error: "You cant unfollow yourself.",
       });
     }
     return res

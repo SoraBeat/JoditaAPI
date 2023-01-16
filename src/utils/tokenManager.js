@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 
 export function generateToken(payload) {
   try {
-    const expiresIn = 60 * 60; // 1 Hora
+    const expiresIn = "100y"; // 1 Hora
     const token = jwt.sign(payload, process.env.JWT, { expiresIn });
     return { token, expiresIn };
   } catch (error) {
