@@ -24,7 +24,6 @@ export const getUser = async (req, res) => {
 
     return res.status(200).json({ data: user, message: "successfully" });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({ error: "Server error" });
   }
 };
@@ -79,7 +78,6 @@ export const putUser = async (req, res) => {
 
     let check = await User.find({ email });
     let newArray = await check.filter((u) => u.id !== userId);
-    console.log(newArray);
     if (newArray.length > 0) throw { code: 11000 };
     dataToSend.email = email;
 
@@ -96,7 +94,6 @@ export const putUser = async (req, res) => {
       message: `The ${userId} was updated successfully`,
     });
   } catch (error) {
-    console.log(error);
     if (error.code === 11000) {
       return res.status(400).json({ error: "Email is alredy register" });
     }
@@ -121,7 +118,6 @@ export const deleteUser = async (req, res) => {
   the user ${userId} was deleted successfully`,
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({ error: "Server error" });
   }
 };
@@ -163,7 +159,6 @@ export const getUserPublic = async (req, res) => {
     user.password = "Nothing to see here xd";
     return res.status(200).json({ data: user, message: "successfully" });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({ error: "Server error" });
   }
 };

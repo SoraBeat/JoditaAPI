@@ -15,7 +15,14 @@ export const register = async (req, res) => {
     if (user) throw { code: 11001 };
 
     //Save in database
-    user = new User({ email, password, userName, isAdmin, isPremium,wasBanned });
+    user = new User({
+      email,
+      password,
+      userName,
+      isAdmin,
+      isPremium,
+      wasBanned,
+    });
     user.save();
 
     return res.status(201).json({ ok: true });
@@ -53,7 +60,6 @@ export const login = async (req, res) => {
     });
     return res.status(200).json({ token, expiresIn });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({ error: "Server error" });
   }
 };
@@ -64,5 +70,14 @@ export const exampleProtectedRoute = async (req, res) => {
     return res.status(200).json({ uid: user.id });
   } catch (error) {
     return res.status(500).json({ error: "Server error" });
+  }
+};
+
+export const logout = async (req, res) => {
+  try {
+    await res.clearCookie("token");
+    res.status(200).json({ message: "You logout correctly" });
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
   }
 };

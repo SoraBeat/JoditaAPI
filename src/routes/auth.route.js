@@ -3,6 +3,7 @@ import { body } from "express-validator";
 import {
   exampleProtectedRoute,
   login,
+  logout,
   register,
 } from "../controllers/auth.controller.js";
 import { requireToken } from "../middlewares/requireToken.js";
@@ -33,6 +34,8 @@ router.post(
   validationResultExpress,
   login
 );
+
+router.post("/logout", logout);
 
 router.post("/protectedExample", [requireToken], exampleProtectedRoute);
 
