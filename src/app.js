@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
 import userRouter from "./routes/user.route.js";
@@ -19,6 +20,7 @@ const limiter = rateLimit({
 });
 
 //Middlewares
+app.use(cors());
 app.use(limiter);
 app.use(express.json());
 app.use(cookieParser());
