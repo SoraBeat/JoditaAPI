@@ -10,14 +10,10 @@ const router = Router();
 router.put(
   "/follow",
   [
-    body("fromId")
+    body("userId")
       .trim()
       .isLength({ isLength: 24 })
-      .withMessage("The fromId param is incorrect, have to be 24 characters"),
-    body("toId")
-      .trim()
-      .isLength({ isLength: 24 })
-      .withMessage("The toId param is incorrect, have to be 24 characters"),
+      .withMessage("The userId param is incorrect, have to be 24 characters"),
     requireToken,
   ],
   validationResultExpress,
@@ -27,14 +23,10 @@ router.put(
 router.put(
   "/unfollow",
   [
-    body("fromId")
+    body("userId")
       .trim()
       .isLength({ isLength: 24 })
-      .withMessage("The fromId param is incorrect, have to be 24 characters"),
-    body("toId")
-      .trim()
-      .isLength({ isLength: 24 })
-      .withMessage("The toId param is incorrect, have to be 24 characters"),
+      .withMessage("The userId param is incorrect, have to be 24 characters"),
     requireToken,
   ],
   validationResultExpress,

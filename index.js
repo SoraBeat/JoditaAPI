@@ -7,6 +7,7 @@ import premiumRouter from "./src/routes/premium.route.js";
 import authRouterPublic from "./src/routes/auth.route.js";
 import userRouterPublic from "./src/routes/user.public.route.js";
 import followRouterPublic from "./src/routes/follow.public.route.js";
+import reportRouterPublic from "./src/routes/reports.public.route.js";
 import "./src/database/connectMongo.js";
 
 //Initial config
@@ -29,6 +30,7 @@ app.use("/api/private", premiumRouter);
 app.use("/api/public", authRouterPublic);
 app.use("/api/public", userRouterPublic);
 app.use("/api/public", followRouterPublic);
+app.use("/api/public", reportRouterPublic);
 
 //MongoDB Conecction
 app.get("/", (req, res) => res.send("API Jodita"));
