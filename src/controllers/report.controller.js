@@ -1,4 +1,5 @@
 import { User } from "../models/user.js";
+import { UserToReview } from "../models/userToReview.js";
 import { getTokenPayload } from "../utils/tokenManager.js";
 
 export const reportPerson = async (req, res) => {
@@ -14,6 +15,19 @@ export const reportPerson = async (req, res) => {
     await userTo.reports.push(fromId);
     await userTo.save();
 
+    if (userTo.reports.length >= 50) {
+      const isAlredyInBlackList = await UserToReview.findOne({ userId: toId });
+      if (!isAlredyInBlackList) {
+        const newItemBlackList = await new UserToReview({
+          userId: toId,
+          datetime: Date.now(),
+        });
+        await newItemBlackList.save();
+      } else {
+        throw { code: 15002 };
+      }
+    }
+
     return res.status(200).json({
       message: `User ${fromId} reported ${toId} successfully`,
     });
@@ -27,6 +41,11 @@ export const reportPerson = async (req, res) => {
     if (error.code === 15001) {
       return res.status(400).json({
         error: "You cant report yourself.",
+      });
+    }
+    if (error.code === 15002) {
+      return res.status(400).json({
+        error: "This user is alredy in the blacklist.",
       });
     }
     return res
