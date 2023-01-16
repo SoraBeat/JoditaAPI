@@ -5,7 +5,7 @@ export const addPremium = async (req, res) => {
 
   try {
     let user = await User.findById(userId);
-    //Verify if alredy follow
+    //Verify if is alredy alredy premium
     let checkUser = await user.isPremium;
     if (checkUser) throw { code: 14000 };
     user.isPremium = true;
@@ -27,7 +27,7 @@ export const removePremium = async (req, res) => {
 
   try {
     let user = await User.findById(userId);
-    //Verify if alredy follow
+    //Verify if is not premium
     let checkUser = await user.isPremium;
     if (!checkUser) throw { code: 14001 };
     user.isPremium = false;

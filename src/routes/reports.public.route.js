@@ -22,7 +22,7 @@ router.post(
   validationResultExpress,
   reportPerson
 );
-//Report user
+//Report problem
 router.post(
   "/reportProblem",
   [
