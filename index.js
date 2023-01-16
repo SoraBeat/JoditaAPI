@@ -35,5 +35,5 @@ app.use("/api/public", followRouterPublic);
 app.use("/api/public", reportRouterPublic);
 
 //MongoDB Conecction
-app.get("/", (req, res) => res.sendFile("./index.html", { root: "./" }));
+app.get("/", (req, res) => res.sendFile("index.html", { root: "./" }));
 app.listen(port, () => console.log(`Api escuchando en puerto: ${port} ...`));
