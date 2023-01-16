@@ -12,6 +12,8 @@ import reportRouterPublic from "./src/routes/reports.public.route.js";
 import "./src/database/connectMongo.js";
 import path from "path";
 
+const __dirname = path.resolve();
+
 //Initial config
 const app = express();
 const port = process.env.PORT || 3001;
@@ -36,7 +38,5 @@ app.use("/api/public", followRouterPublic);
 app.use("/api/public", reportRouterPublic);
 
 //MongoDB Conecction
-app.get("/", (req, res) =>
-  res.sendFile("index.html", { root: path.join("./") })
-);
+app.get("/", (req, res) => res.sendFile("index.html", { root: __dirname }));
 app.listen(port, () => console.log(`Api escuchando en puerto: ${port} ...`));
