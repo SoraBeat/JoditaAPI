@@ -31,5 +31,5 @@ app.use("/api/public", userRouterPublic);
 app.use("/api/public", followRouterPublic);
 
 //MongoDB Conecction
-app.get("/", (req, res) => res.send("Bienvenido a mi API"));
+app.get("/", (req, res) => res.send("API Jodita"));
 app.listen(port, () => console.log(`Api escuchando en puerto: ${port} ...`));
