@@ -26,14 +26,14 @@ app.use(cors());
 app.use(limiter);
 app.use(express.json());
 app.use(cookieParser());
-app.use("/api/private", userRouter); 
-app.use("/api/private", premiumRouter); 
-app.use("/api/private", reportRouter); 
-app.use("/api/public", authRouterPublic); 
-app.use("/api/public", userRouterPublic); 
-app.use("/api/public", followRouterPublic); 
-app.use("/api/public", reportRouterPublic); 
+app.use("/api/private", userRouter);
+app.use("/api/private", premiumRouter);
+app.use("/api/private", reportRouter);
+app.use("/api/public", authRouterPublic);
+app.use("/api/public", userRouterPublic);
+app.use("/api/public", followRouterPublic);
+app.use("/api/public", reportRouterPublic);
 
 //MongoDB Conecction
-app.get("/", (req, res) => res.send("API Jodita"));
+app.get("/", (req, res) => res.sendFile("./index.html", { root: "./" }));
 app.listen(port, () => console.log(`Api escuchando en puerto: ${port} ...`));
