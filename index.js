@@ -10,6 +10,7 @@ import userRouterPublic from "./src/routes/user.public.route.js";
 import followRouterPublic from "./src/routes/follow.public.route.js";
 import reportRouterPublic from "./src/routes/reports.public.route.js";
 import "./src/database/connectMongo.js";
+import path from "path";
 
 //Initial config
 const app = express();
@@ -35,5 +36,7 @@ app.use("/api/public", followRouterPublic);
 app.use("/api/public", reportRouterPublic);
 
 //MongoDB Conecction
-app.get("/", (req, res) => res.sendFile("index.html", { root: "./" }));
+app.get("/", (req, res) =>
+  res.sendFile("index.html", { root: path.join("./") })
+);
 app.listen(port, () => console.log(`Api escuchando en puerto: ${port} ...`));
