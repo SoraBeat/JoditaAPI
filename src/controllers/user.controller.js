@@ -156,9 +156,15 @@ export const getUserPublic = async (req, res) => {
     //Find the user
     const { userId } = req.params;
     const user = await User.findById(userId);
+    if (!user || user.isAdmin) {
+      throw { code: 17000 };
+    }
     user.password = "Nothing to see here xd";
     return res.status(200).json({ data: user, message: "successfully" });
   } catch (error) {
+    if (error.code === 17000) {
+      return res.status(400).json({ error: "User not found" });
+    }
     return res.status(500).json({ error: "Server error" });
   }
 };

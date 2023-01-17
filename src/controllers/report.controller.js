@@ -80,7 +80,7 @@ export const getReports = async (req, res) => {
   try {
     const usersInBlackList = await UserToReview.find({});
     await usersInBlackList.sort(function (u1, u2) {
-      return u1 < u2 ? -1 : u1 > u2 ? 1 : 0;
+      return u1.datetime < u2.datetime ? -1 : u1.datetime > u2.datetime ? 1 : 0;
     });
     return res
       .status(200)
@@ -94,7 +94,7 @@ export const getReportedProblems = async (req, res) => {
   try {
     const reportedProblems = await ProblemReport.find({});
     await reportedProblems.sort(function (u1, u2) {
-      return u1 < u2 ? -1 : u1 > u2 ? 1 : 0;
+      return u1.datetime < u2.datetime ? -1 : u1.datetime > u2.datetime ? 1 : 0;
     });
     return res
       .status(200)

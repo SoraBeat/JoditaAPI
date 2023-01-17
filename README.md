@@ -252,7 +252,72 @@ With this command you close session
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 | `eventId` | `ObjectID` | **Required**. |
-## ⚒️Developers
+
+## Events
+
+```http
+  GET /api/public/events
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `search` | `string` | **Optional**. |
+| `isPremium`| `boolean`|**Optional**|
+| `eventType`| `string`|**Optional**|
+| `onlyFree`| `boolean`|**Optional**|
+| `tag`| `string`|**Optional**|
+| `lastCreated`| `boolean`|**Optional**|
+| `skip` | `number` | **Optional**. |
+| `limit`| `number`|**Optional**|
+
+```http
+  GET /api/public/event/:eventId
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `eventId` | `ObjectID` | **Required**. |
+
+```http
+  POST /api/public/event
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `title`| `string`|**Required**|
+|  `description`| `string`|**Required**|
+|  `place`| `string`|**Required**|
+|  `eventType`| `string`|**Required**|
+|  `capacity`| `number`|**Required**|
+|  `tags`| `array`|**Required**|
+|  `datetime`| `date`|**Required**|
+|  `price`| `number`|**Required**|
+
+```http
+  PUT /api/public/event/:eventId
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `eventId` | `ObjectID` | **Required**. |
+| `title`| `string`|**Required**|
+|  `description`| `string`|**Required**|
+|  `place`| `string`|**Required**|
+|  `eventType`| `string`|**Required**|
+|  `capacity`| `number`|**Required**|
+|  `tags`| `array`|**Required**|
+|  `datetime`| `date`|**Required**|
+|  `price`| `number`|**Required**|
+
+```http
+  DELETE /api/public/event/:eventId
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `eventId` | `ObjectID` | **Required**. |
+
+## ⚒️Developer
 
 Esta API ha sido realizada por:
 
@@ -260,3 +325,8 @@ Esta API ha sido realizada por:
 - Github: [https://github.com/SoraBeat]()
 - Linkedin: [https://www.linkedin.com/in/lautaro-elian-roa-mazzola-b30247209/]()
 
+## ⚒️Collaborators
+### Matias Juarez
+- Linkedin: [https://www.linkedin.com/in/matias2707/]()
+### Gerardo Alegre
+- Linkedin: [https://www.linkedin.com/in/gerardo-alegre-333182177/]()

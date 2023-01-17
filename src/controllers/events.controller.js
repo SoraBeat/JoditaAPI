@@ -16,7 +16,7 @@ export const postEvent = async (req, res) => {
       price,
       isPremium,
     } = req.body;
-    const user = await Event.findById(userId);
+    const user = await User.findById(userId);
     if (!user) throw { code: 16001 };
     //Save in database
     const newEvent = await new Event({
@@ -154,6 +154,194 @@ export const getEvent = async (req, res) => {
 
     return res.status(200).json({ data: eventToFind, message: "successfully" });
   } catch (error) {
+    return res.status(500).json({ error: "Server error" });
+  }
+};
+
+export const getEventsPublic = async (req, res) => {
+  try {
+    //Filter the result according to query params
+    const {
+      search = "",
+      isPremium,
+      eventType = "",
+      onlyFree,
+      tag,
+      lastCreated,
+      skip = 0,
+      limit = 0,
+    } = req.query;
+    let queryParams = {
+      title: { $regex: search, $options: "i" },
+      eventType: { $regex: eventType, $options: "i" },
+    };
+    if (isPremium !== undefined) queryParams.isPremium = isPremium;
+    let events = await Event.find(queryParams).limit(limit).skip(skip);
+
+    //Filter the finished events
+    events = await events.filter((e) => e.datetime > Date.now());
+
+    // //Filter tags
+    if (tag) {
+      events = await events.filter((e) => e.tags.includes(tag));
+    }
+    //Filter only free
+    if (onlyFree) {
+      events = await events.filter((e) => e.price === 0);
+    }
+    //Order by last created
+    if (lastCreated) {
+      await events.sort(function (e1, e2) {
+        if (e1.datetime > e2.datetime) return -1;
+        else if (e1.datetime < e2.datetime) return 1;
+        else return 0;
+      });
+    }
+
+    //Order by premium
+    await events.sort(function (e1, e2) {
+      if (e1.isPremium > e2.isPremium) return -1;
+      else if (e1.isPremium < e2.isPremium) return 1;
+      else return 0;
+    });
+
+    return res.status(200).send({ data: events, message: "successfully" });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Server error, check if the parameters of the query are OK",
+    });
+  }
+};
+
+export const postEventPublic = async (req, res) => {
+  try {
+    const { uid: userId } = await getTokenPayload(req.cookies.token);
+    const {
+      title,
+      description,
+      place,
+      eventType,
+      capacity,
+      tags,
+      datetime,
+      price,
+    } = req.body;
+    const user = await User.findById(userId);
+    if (!user) throw { code: 16001 };
+    const isPremium = user.isPremium;
+    //Save in database
+    const newEvent = await new Event({
+      userId,
+      title,
+      description,
+      place,
+      eventType,
+      capacity,
+      tags,
+      datetime,
+      price,
+      isPremium,
+    });
+    await newEvent.save();
+
+    return res
+      .status(200)
+      .json({ data: newEvent, message: "The event was created successfully" });
+  } catch (error) {
+    if (error.code === 16001) {
+      return res.status(400).json({ error: "User not found, check the ID" });
+    }
+    return res.status(500).json({ error: "Server error" });
+  }
+};
+
+export const putEventPublic = async (req, res) => {
+  try {
+    const { eventId } = req.params;
+    const { uid: userId } = await getTokenPayload(req.cookies.token);
+    const {
+      title,
+      description,
+      place,
+      eventType,
+      capacity,
+      tags,
+      datetime,
+      price,
+    } = req.body;
+    const user = await User.findById(userId);
+    if (!user) throw { code: 16001 };
+    const isPremium = user.isPremium;
+    const event = await Event.findById(eventId);
+    if (!event) throw { code: 16002 };
+    if (event.userId.toString() !== user.id) throw { code: 16003 };
+    //Save in database
+    await event.updateOne({
+      title,
+      description,
+      place,
+      eventType,
+      capacity,
+      tags,
+      datetime,
+      price,
+      isPremium,
+    });
+
+    return res.status(200).json({
+      data: {
+        eventId,
+        userId,
+        title,
+        description,
+        place,
+        eventType,
+        capacity,
+        tags,
+        datetime,
+        price,
+        isPremium,
+      },
+      message: "The event was edited successfully",
+    });
+  } catch (error) {
+    if (error.code === 16001) {
+      return res.status(400).json({ error: "User not found, check the ID" });
+    }
+    if (error.code === 16002) {
+      return res.status(400).json({ error: "Event not found, check the ID" });
+    }
+    if (error.code === 16003) {
+      return res
+        .status(400)
+        .json({ error: "You can't edit this event, you didn't create it" });
+    }
+    return res.status(500).json({ error: "Server error" });
+  }
+};
+
+export const deleteEventPublic = async (req, res) => {
+  try {
+    const { uid: userId } = await getTokenPayload(req.cookies.token);
+    //Find the event
+    const { eventId } = req.params;
+    const eventToDelete = await Event.findById(eventId);
+    if (!eventToDelete)
+      return res.status(404).json({ error: "Event not found" });
+    if (eventToDelete.userId.toString() !== userId) throw { code: 18000 };
+    await eventToDelete.delete();
+
+    return res.status(200).json({
+      data: eventToDelete,
+      message: `
+      the user ${eventId} was deleted successfully`,
+    });
+  } catch (error) {
+    if (error.code === 18000) {
+      return res
+        .status(400)
+        .json({ error: "You cant delete this event, you didn't create it" });
+    }
     return res.status(500).json({ error: "Server error" });
   }
 };
