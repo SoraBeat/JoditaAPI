@@ -93,7 +93,6 @@ export const putEvent = async (req, res) => {
       message: "The event was edited successfully",
     });
   } catch (error) {
-    console.log(error);
     if (error.code === 16000) {
       return res.status(400).json({ error: "Event not found, check the ID" });
     }
@@ -153,6 +152,37 @@ export const getEvent = async (req, res) => {
     const eventToFind = await Event.findById(eventId);
 
     return res.status(200).json({ data: eventToFind, message: "successfully" });
+  } catch (error) {
+    return res.status(500).json({ error: "Server error" });
+  }
+};
+
+export const getMyEvents = async (req, res) => {
+  try {
+    const { uid: userId } = await getTokenPayload(req.cookies.token);
+    //Find the event
+    let eventsToFind = await Event.find({ userId });
+    //Filter the finished events
+    eventsToFind = await eventsToFind.filter((e) => e.datetime > Date.now());
+    return res
+      .status(200)
+      .json({ data: eventsToFind, message: "successfully" });
+  } catch (error) {
+    return res.status(500).json({ error: "Server error" });
+  }
+};
+export const getMyFavorites = async (req, res) => {
+  try {
+    const { uid: userId } = await getTokenPayload(req.cookies.token);
+    //Find the events
+    const user = await User.findById(userId);
+    const arrayOfIds = user.favorites;
+    let eventsToFind = await Event.find({ _id: { $in: arrayOfIds } });
+    //Filter the finished events
+    eventsToFind = await eventsToFind.filter((e) => e.datetime > Date.now());
+    return res
+      .status(200)
+      .json({ data: eventsToFind, message: "successfully" });
   } catch (error) {
     return res.status(500).json({ error: "Server error" });
   }
@@ -341,6 +371,83 @@ export const deleteEventPublic = async (req, res) => {
       return res
         .status(400)
         .json({ error: "You cant delete this event, you didn't create it" });
+    }
+    return res.status(500).json({ error: "Server error" });
+  }
+};
+
+export const addFavoritePublic = async (req, res) => {
+  try {
+    const { eventId } = req.params;
+    const { uid: userId } = await getTokenPayload(req.cookies.token);
+
+    const event = await Event.findById(eventId);
+    if (!event) throw { code: 16002 };
+    const user = await User.findById(userId);
+    if (!user) throw { code: 16001 };
+
+    //Save in database
+    const alredyFavorite = user.favorites.includes(eventId);
+    if (alredyFavorite) throw { code: 16005 };
+    user.favorites += eventId;
+    event.hearts = event.hearts + 1;
+    user.save();
+    event.save();
+
+    return res.status(200).json({
+      message: `You added the event ${eventId} to favorites`,
+    });
+  } catch (error) {
+    if (error.code === 16001) {
+      return res.status(400).json({ error: "User not found, check the ID" });
+    }
+    if (error.code === 16002) {
+      return res.status(400).json({ error: "Event not found, check the ID" });
+    }
+    if (error.code === 16005) {
+      return res
+        .status(400)
+        .json({ error: "You alredy have this event in your favorite list" });
+    }
+    return res.status(500).json({ error: "Server error" });
+  }
+};
+
+export const removeFavoritePublic = async (req, res) => {
+  try {
+    const { eventId } = req.params;
+    const { uid: userId } = await getTokenPayload(req.cookies.token);
+
+    const event = await Event.findById(eventId);
+    if (!event) throw { code: 16002 };
+    const user = await User.findById(userId);
+    if (!user) throw { code: 16001 };
+
+    //Save in database
+    const alredyFavorite = await user.favorites.includes(eventId);
+    if (!alredyFavorite) throw { code: 16005 };
+    const newFavList = await user.favorites.filter(
+      (f) => f.toString() !== eventId
+    );
+    user.favorites = newFavList;
+    event.hearts = event.hearts - 1;
+    user.save();
+    event.save();
+
+    return res.status(200).json({
+      message: `You remove the event ${eventId} from favorites`,
+    });
+  } catch (error) {
+    if (error.code === 16001) {
+      return res.status(400).json({ error: "User not found, check the ID" });
+    }
+    if (error.code === 16002) {
+      return res.status(400).json({ error: "Event not found, check the ID" });
+    }
+    if (error.code === 16005) {
+      return res
+        .status(400)
+        .json({ error: "You dont have this event in your favorite list" });
     }
     return res.status(500).json({ error: "Server error" });
   }

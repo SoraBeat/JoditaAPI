@@ -47,6 +47,10 @@ const event = new Schema({
     type: Boolean,
     default: false,
   },
+  hearts: {
+    type: Number,
+    default: 0,
+  },
 });
 
 export const Event = model("Event", event);

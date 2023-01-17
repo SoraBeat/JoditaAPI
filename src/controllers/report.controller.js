@@ -33,7 +33,6 @@ export const reportPerson = async (req, res) => {
       message: `User ${fromId} reported ${toId} successfully`,
     });
   } catch (error) {
-    console.log(error);
     if (error.code === 15000) {
       return res.status(400).json({
         error: "You alredy report this person.",
