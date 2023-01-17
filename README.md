@@ -317,6 +317,30 @@ With this command you close session
 | :-------- | :------- | :------------------------- |
 | `eventId` | `ObjectID` | **Required**. |
 
+```http
+  GET /api/public/myEvents
+```
+
+
+```http
+  GET /api/public/myFavorites
+```
+
+
+```http
+  PUT /api/public/addFavorite/:eventId
+```
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `eventId` | `ObjectID` | **Required**. |
+
+```http
+  PUT /api/public/removeFavorite/:eventId
+```
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `eventId` | `ObjectID` | **Required**. |
+
 ## ⚒️Developer
 
 Esta API ha sido realizada por:

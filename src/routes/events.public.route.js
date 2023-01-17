@@ -8,6 +8,10 @@ import {
   postEventPublic,
   putEventPublic,
   deleteEventPublic,
+  getMyEvents,
+  addFavoritePublic,
+  removeFavoritePublic,
+  getMyFavorites,
 } from "../controllers/events.controller.js";
 
 const router = Router();
@@ -114,4 +118,43 @@ router.delete(
   validationResultExpress,
   deleteEventPublic
 );
+
+//Get my events
+router.get("/myEvents", [requireToken], validationResultExpress, getMyEvents);
+
+//Get my favorites
+router.get(
+  "/myFavorites",
+  [requireToken],
+  validationResultExpress,
+  getMyFavorites
+);
+
+//Add event to favorite list
+router.put(
+  "/addFavorite/:eventId",
+  [
+    query("eventId")
+      .trim()
+      .isLength({ isLength: 24 })
+      .withMessage("The eventId param is incorrect, have to be 24 characters"),
+    requireToken,
+  ],
+  validationResultExpress,
+  addFavoritePublic
+);
+//Remove event to favorite list
+router.put(
+  "/removeFavorite/:eventId",
+  [
+    query("eventId")
+      .trim()
+      .isLength({ isLength: 24 })
+      .withMessage("The eventId param is incorrect, have to be 24 characters"),
+    requireToken,
+  ],
+  validationResultExpress,
+  removeFavoritePublic
+);
+
 export default router;
