@@ -186,6 +186,72 @@ With this command you close session
 | `problemType` | `string` | **Required**. |
 | `description` | `string` | **Optional**. |
 
+
+## Events ADMIN
+**These requests requires ADMIN permissions**
+
+```http
+  GET /api/private/events
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `search` | `string` | **Optional**. |
+| `isPremium`| `boolean`|**Optional**|
+ | `skip` | `number` | **Optional**. |
+| `limit`| `number`|**Optional**|
+
+```http
+  GET /api/private/user/:eventId
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `eventId` | `ObjectID` | **Required**. |
+
+```http
+  POST /api/private/event
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `userId` | `ObjectID` | **Required**. |
+| `title`| `string`|**Required**|
+|  `description`| `string`|**Required**|
+|  `place`| `string`|**Required**|
+|  `eventType`| `string`|**Required**|
+|  `capacity`| `number`|**Required**|
+|  `tags`| `array`|**Required**|
+|  `datetime`| `date`|**Required**|
+|  `price`| `number`|**Required**|
+|  `isPremium`| `boolean`|**Required**|
+
+
+```http
+  PUT /api/private/event/:eventId
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `eventId` | `ObjectID` | **Required**. |
+| `userId` | `ObjectID` | **Required**. |
+| `title`| `string`|**Required**|
+|  `description`| `string`|**Required**|
+|  `place`| `string`|**Required**|
+|  `eventType`| `string`|**Required**|
+|  `capacity`| `number`|**Required**|
+|  `tags`| `array`|**Required**|
+|  `datetime`| `date`|**Required**|
+|  `price`| `number`|**Required**|
+|  `isPremium`| `boolean`|**Required**|
+
+```http
+  DELETE /api/private/event/:eventId
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `eventId` | `ObjectID` | **Required**. |
 ## ⚒️Developers
 
 Esta API ha sido realizada por:
