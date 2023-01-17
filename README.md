@@ -3,7 +3,7 @@
 
 # API Jodita
 
-Welcome to the Jodita API, in this section we will talk about its operation, characteristics and others. Below everything you will find links so that you can contact you in case you have any questions or recommendations. All messages are welcome!
+Welcome to the Jodita API, in this section we will talk about its operation, characteristics and others. Below everything you will find links so that you can contact you in case you have any questions or recommendations. All messages are welcome!. To take into account: for public requests it is necessary to register and log in since a valid token is needed. This API is still under development.
 
 
 ## Visual
