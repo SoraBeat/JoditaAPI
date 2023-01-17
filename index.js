@@ -5,6 +5,7 @@ import rateLimit from "express-rate-limit";
 import userRouter from "./src/routes/user.route.js";
 import premiumRouter from "./src/routes/premium.route.js";
 import reportRouter from "./src/routes/reports.route.js";
+import eventRouter from "./src/routes/events.route.js";
 import authRouterPublic from "./src/routes/auth.route.js";
 import userRouterPublic from "./src/routes/user.public.route.js";
 import followRouterPublic from "./src/routes/follow.public.route.js";
@@ -32,13 +33,12 @@ app.use(cookieParser());
 app.use("/api/private", userRouter);
 app.use("/api/private", premiumRouter);
 app.use("/api/private", reportRouter);
+app.use("/api/private", eventRouter);
 app.use("/api/public", authRouterPublic);
 app.use("/api/public", userRouterPublic);
 app.use("/api/public", followRouterPublic);
 app.use("/api/public", reportRouterPublic);
 
 //MongoDB Conecction
-app.get("/", (req, res) =>
-  res.sendFile(path.join(__dirname, "./index.html"))
-);
+app.get("/", (req, res) => res.sendFile(path.join(__dirname, "./index.html")));
 app.listen(port, () => console.log(`Api escuchando en puerto: ${port} ...`));
