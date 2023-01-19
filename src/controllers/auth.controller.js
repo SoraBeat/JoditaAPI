@@ -58,7 +58,7 @@ export const login = async (req, res) => {
       httpOnly: true,
       secure: !(process.env.MODO === "developer"),
     });
-    return res.status(200).json({ token, expiresIn });
+    return res.status(200).json({ token, expiresIn, userId: user.id });
   } catch (error) {
     return res.status(500).json({ error: "Server error" });
   }
