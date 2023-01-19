@@ -195,6 +195,7 @@ export const getEventsPublic = async (req, res) => {
       search = "",
       isPremium,
       eventType = "",
+      orderByHearts,
       onlyFree,
       tag,
       lastCreated,
@@ -218,6 +219,14 @@ export const getEventsPublic = async (req, res) => {
     //Filter only free
     if (onlyFree) {
       events = await events.filter((e) => e.price === 0);
+    }
+    //Order by last created
+    if (orderByHearts) {
+      await events.sort(function (e1, e2) {
+        if (e1.hearts > e2.hearts) return -1;
+        else if (e1.hearts < e2.hearts) return 1;
+        else return 0;
+      });
     }
     //Order by last created
     if (lastCreated) {
