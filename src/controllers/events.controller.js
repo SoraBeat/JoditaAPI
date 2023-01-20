@@ -398,7 +398,7 @@ export const addFavoritePublic = async (req, res) => {
     //Save in database
     const alredyFavorite = user.favorites.includes(eventId);
     if (alredyFavorite) throw { code: 16005 };
-    user.favorites += eventId;
+    user.favorites.push(eventId);
     event.hearts = event.hearts + 1;
     user.save();
     event.save();
