@@ -3,6 +3,7 @@ import { query, body } from "express-validator";
 import validationResultExpress from "../middlewares/validationResultExpress.js";
 import { requireToken } from "../middlewares/requireToken.js";
 import { requireAdminPermissions } from "../middlewares/requireAdminPermission.js";
+import { imageValidator } from "../middlewares/imageValidator.js";
 import {
   deleteEvent,
   getEvents,
@@ -71,6 +72,7 @@ router.post(
       .isNumeric()
       .isLength({ min: 0, max: 5 }),
     body("isPremium", "isPremium value is not boolean").isBoolean(),
+    imageValidator,
     requireToken,
     requireAdminPermissions,
   ],
@@ -108,6 +110,7 @@ router.put(
       .isNumeric()
       .isLength({ min: 0, max: 5 }),
     body("isPremium", "isPremium value is not boolean").isBoolean(),
+    imageValidator,
     requireToken,
     requireAdminPermissions,
   ],

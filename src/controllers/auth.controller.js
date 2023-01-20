@@ -5,7 +5,7 @@ export const register = async (req, res) => {
   const isAdmin = false;
   const isPremium = false;
   const wasBanned = false;
-  const { email, password, userName } = req.body;
+  const { email, password, userName, image } = req.body;
   try {
     //Verify if email is alredy registered
     let user = await User.findOne({ email });
@@ -22,6 +22,7 @@ export const register = async (req, res) => {
       isAdmin,
       isPremium,
       wasBanned,
+      image,
     });
     user.save();
 

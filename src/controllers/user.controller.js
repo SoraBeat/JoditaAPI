@@ -29,7 +29,7 @@ export const getUser = async (req, res) => {
 };
 
 export const postUser = async (req, res) => {
-  const { email, password, userName, isAdmin, isPremium, wasBanned } = req.body;
+  const { email, password, userName, isAdmin, isPremium, wasBanned,image } = req.body;
   try {
     //Verify if email is alredy registered
     let user = await User.findOne({ email });
@@ -46,6 +46,7 @@ export const postUser = async (req, res) => {
       isAdmin,
       isPremium,
       wasBanned,
+      image
     });
     await user.save();
 
@@ -65,7 +66,7 @@ export const postUser = async (req, res) => {
 
 export const putUser = async (req, res) => {
   const { userId } = req.params;
-  const { email, password, userName, isAdmin, isPremium, wasBanned } = req.body;
+  const { email, password, userName, isAdmin, isPremium, wasBanned,image } = req.body;
 
   try {
     let dataToSend = {
@@ -73,6 +74,7 @@ export const putUser = async (req, res) => {
       isAdmin,
       isPremium,
       wasBanned,
+      image
     };
     let user = await User.findById(userId);
 

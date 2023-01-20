@@ -51,6 +51,11 @@ const event = new Schema({
     type: Number,
     default: 0,
   },
+  image: {
+    type: String,
+    default: null,
+    trim: true,
+  },
 });
 
 export const Event = model("Event", event);

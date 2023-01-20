@@ -11,6 +11,7 @@ import {
   deleteUser,
   putUser,
 } from "../controllers/user.controller.js";
+import { imageValidator } from "../middlewares/imageValidator.js";
 
 const router = Router();
 //Get all users
@@ -52,6 +53,7 @@ router.post(
     body("password", "Maximum 20 characters").trim().isLength({ max: 20 }),
     body("isAdmin", "IsAdmin value has to be Boolean").isBoolean().exists(),
     body("isPremium", "isPremium value has to be Boolean").isBoolean().exists(),
+    imageValidator,
     requireToken,
     requireAdminPermissions,
   ],
@@ -87,6 +89,7 @@ router.put(
       .trim()
       .isLength({ isLength: 24 })
       .withMessage("The userId param is incorrect, have to be 24 characters"),
+    imageValidator,
     requireToken,
     requireAdminPermissions,
   ],
