@@ -41,6 +41,11 @@ const userSchema = new Schema({
     type: Boolean,
     require: true,
   },
+  image: {
+    type: String,
+    default: null,
+    trim: true,
+  },
 });
 
 //Hash password before save the user

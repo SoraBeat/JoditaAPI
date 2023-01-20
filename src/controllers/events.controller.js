@@ -15,6 +15,7 @@ export const postEvent = async (req, res) => {
       datetime,
       price,
       isPremium,
+      image,
     } = req.body;
     const user = await User.findById(userId);
     if (!user) throw { code: 16001 };
@@ -30,6 +31,7 @@ export const postEvent = async (req, res) => {
       datetime,
       price,
       isPremium,
+      image,
     });
     await newEvent.save();
 
@@ -58,6 +60,7 @@ export const putEvent = async (req, res) => {
       datetime,
       price,
       isPremium,
+      image,
     } = req.body;
     const editEvent = await Event.findById(eventId);
     if (!editEvent) throw { code: 16000 };
@@ -75,6 +78,7 @@ export const putEvent = async (req, res) => {
       datetime,
       price,
       isPremium,
+      image,
     });
 
     return res.status(200).json({
@@ -89,6 +93,7 @@ export const putEvent = async (req, res) => {
         datetime,
         price,
         isPremium,
+        image,
       },
       message: "The event was edited successfully",
     });
@@ -264,6 +269,7 @@ export const postEventPublic = async (req, res) => {
       tags,
       datetime,
       price,
+      image,
     } = req.body;
     const user = await User.findById(userId);
     if (!user) throw { code: 16001 };
@@ -280,6 +286,7 @@ export const postEventPublic = async (req, res) => {
       datetime,
       price,
       isPremium,
+      image,
     });
     await newEvent.save();
 
@@ -307,6 +314,7 @@ export const putEventPublic = async (req, res) => {
       tags,
       datetime,
       price,
+      image,
     } = req.body;
     const user = await User.findById(userId);
     if (!user) throw { code: 16001 };
@@ -325,6 +333,7 @@ export const putEventPublic = async (req, res) => {
       datetime,
       price,
       isPremium,
+      image,
     });
 
     return res.status(200).json({
@@ -340,6 +349,7 @@ export const putEventPublic = async (req, res) => {
         datetime,
         price,
         isPremium,
+        image,
       },
       message: "The event was edited successfully",
     });

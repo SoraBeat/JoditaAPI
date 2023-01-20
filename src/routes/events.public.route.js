@@ -13,6 +13,7 @@ import {
   removeFavoritePublic,
   getMyFavorites,
 } from "../controllers/events.controller.js";
+import { imageValidator } from "../middlewares/imageValidator.js";
 
 const router = Router();
 //Get all events
@@ -68,6 +69,7 @@ router.post(
       .trim()
       .isNumeric()
       .isLength({ min: 0, max: 5 }),
+    imageValidator,
     requireToken,
   ],
   validationResultExpress,
@@ -99,6 +101,7 @@ router.put(
       .trim()
       .isNumeric()
       .isLength({ min: 0, max: 5 }),
+    imageValidator,
     requireToken,
   ],
   validationResultExpress,
