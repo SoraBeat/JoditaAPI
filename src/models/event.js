@@ -21,7 +21,7 @@ const event = new Schema({
     require: true,
   },
   eventType: {
-    type: "String",
+    type: String,
     require: true,
     trim: true,
   },
