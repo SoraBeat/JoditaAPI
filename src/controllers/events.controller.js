@@ -204,6 +204,7 @@ export const getEventsPublic = async (req, res) => {
       onlyFree,
       tag,
       lastCreated,
+      userId,
       skip = 0,
       limit = 0,
     } = req.query;
@@ -211,6 +212,7 @@ export const getEventsPublic = async (req, res) => {
       title: { $regex: search, $options: "i" },
       eventType: { $regex: eventType, $options: "i" },
     };
+    if (userId) queryParams.userId = userId;
     if (isPremium !== undefined) queryParams.isPremium = isPremium;
     let events = await Event.find(queryParams).limit(limit).skip(skip);
 
