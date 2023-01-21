@@ -1,4 +1,3 @@
-
 ![logo jodita](https://github.com/SoraBeat/JoditaDB/blob/dev/logojoditabackground.png?raw=true)
 
 # API Jodita
@@ -39,8 +38,7 @@ This api is already running online! Try it if you want!
 | `email`    | `string` | **Required**. |
 | `password` | `string` | **Required**  |
 | `userName` | `string` | **Required**  |
-| `image` | `base64` | **Optional**  |
-
+| `image`    | `base64` | **Optional**  |
 
 ```http
   POST /api/public/logout
@@ -83,7 +81,7 @@ With this command you close session
 | `isAdmin`   | `boolean` | **Required**  |
 | `isPremium` | `boolean` | **Required**  |
 | `wasBanned` | `boolean` | **Required**  |
-| `image` | `base64` | **Optional**  |
+| `image`     | `base64`  | **Optional**  |
 
 ```http
   PUT /api/private/user/:userId
@@ -98,7 +96,7 @@ With this command you close session
 | `isAdmin`   | `boolean`  | **Required**  |
 | `isPremium` | `boolean`  | **Required**  |
 | `wasBanned` | `boolean`  | **Required**  |
-| `image` | `base64` | **Optional**  |
+| `image`     | `base64`   | **Optional**  |
 
 ```http
   DELETE /api/private/user/:userId
@@ -236,7 +234,7 @@ With this command you close session
 | `datetime`    | `date`     | **Required**  |
 | `price`       | `number`   | **Required**  |
 | `isPremium`   | `boolean`  | **Required**  |
-| `image` | `base64` | **Optional**  |
+| `image`       | `base64`   | **Optional**  |
 
 ```http
   PUT /api/private/event/:eventId
@@ -255,7 +253,7 @@ With this command you close session
 | `datetime`    | `date`     | **Required**  |
 | `price`       | `number`   | **Required**  |
 | `isPremium`   | `boolean`  | **Required**  |
-| `image` | `base64` | **Optional**  |
+| `image`       | `base64`   | **Optional**  |
 
 ```http
   DELETE /api/private/event/:eventId
@@ -271,17 +269,18 @@ With this command you close session
   GET /api/public/events
 ```
 
-| Parameter       | Type      | Description   |
-| :-------------- | :-------- | :------------ |
-| `search`        | `string`  | **Optional**. |
-| `isPremium`     | `boolean` | **Optional**  |
-| `orderByHearts` | `boolean` | **Optional**  |
-| `eventType`     | `string`  | **Optional**  |
-| `onlyFree`      | `boolean` | **Optional**  |
-| `tag`           | `string`  | **Optional**  |
-| `lastCreated`   | `boolean` | **Optional**  |
-| `skip`          | `number`  | **Optional**. |
-| `limit`         | `number`  | **Optional**  |
+| Parameter       | Type       | Description   |
+| :-------------- | :--------- | :------------ |
+| `search`        | `string`   | **Optional**. |
+| `isPremium`     | `boolean`  | **Optional**  |
+| `orderByHearts` | `boolean`  | **Optional**  |
+| `eventType`     | `string`   | **Optional**  |
+| `onlyFree`      | `boolean`  | **Optional**  |
+| `tag`           | `string`   | **Optional**  |
+| `lastCreated`   | `boolean`  | **Optional**  |
+| `skip`          | `number`   | **Optional**. |
+| `limit`         | `number`   | **Optional**  |
+| `userId`        | `ObjectID` | **Optional**  |
 
 ```http
   GET /api/public/event/:eventId
@@ -305,7 +304,7 @@ With this command you close session
 | `tags`        | `array`  | **Required** |
 | `datetime`    | `date`   | **Required** |
 | `price`       | `number` | **Required** |
-| `image` | `base64` | **Optional**  |
+| `image`       | `base64` | **Optional** |
 
 ```http
   PUT /api/public/event/:eventId
@@ -322,7 +321,7 @@ With this command you close session
 | `tags`        | `array`    | **Required**  |
 | `datetime`    | `date`     | **Required**  |
 | `price`       | `number`   | **Required**  |
-| `image` | `base64` | **Optional**  |
+| `image`       | `base64`   | **Optional**  |
 
 ```http
   DELETE /api/public/event/:eventId
