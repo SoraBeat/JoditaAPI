@@ -7,6 +7,7 @@ import userRouter from "./src/routes/user.route.js";
 import premiumRouter from "./src/routes/premium.route.js";
 import reportRouter from "./src/routes/reports.route.js";
 import eventRouter from "./src/routes/events.route.js";
+import bellRouter from "./src/routes/bell.route.js";
 
 import authRouterPublic from "./src/routes/auth.route.js";
 import userRouterPublic from "./src/routes/user.public.route.js";
@@ -41,6 +42,7 @@ app.use("/api/private", userRouter);
 app.use("/api/private", premiumRouter);
 app.use("/api/private", reportRouter);
 app.use("/api/private", eventRouter);
+app.use("/api/private", bellRouter);
 
 app.use("/api/public", authRouterPublic);
 app.use("/api/public", userRouterPublic);
