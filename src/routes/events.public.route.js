@@ -64,7 +64,6 @@ router.post(
       .isNumeric()
       .isLength({ min: 1, max: 5 }),
     body("tags", "Maximum 3 tags").isArray({ max: 3 }),
-    body("datetime", "The format of date is wrong").trim().isDate(),
     body("price", "Minimum $0 Maximum $99.999")
       .trim()
       .isNumeric()
@@ -96,7 +95,6 @@ router.put(
       .isNumeric()
       .isLength({ min: 1, max: 5 }),
     body("tags", "Maximum 3 tags").isArray({ max: 3 }),
-    body("datetime", "The format of date is wrong").trim().isDate(),
     body("price", "Minimum $0 Maximum $99.999")
       .trim()
       .isNumeric()
