@@ -35,7 +35,7 @@ const event = new Schema({
     trim: true,
   },
   datetime: {
-    type: Date,
+    type: String,
     require: true,
   },
   price: {
