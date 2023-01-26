@@ -238,8 +238,8 @@ export const getEventsPublic = async (req, res) => {
     //Order by last created
     if (lastCreated) {
       await events.sort(function (e1, e2) {
-        if (e1.datetime > e2.datetime) return -1;
-        else if (e1.datetime < e2.datetime) return 1;
+        if (e1.datetime < e2.datetime) return -1;
+        else if (e1.datetime > e2.datetime) return 1;
         else return 0;
       });
     }
