@@ -56,7 +56,6 @@ router.post(
     body("description", "Minimum 10 characters").trim().isLength({ min: 10 }),
     body("description", "Maximum 100 characters").trim().isLength({ max: 100 }),
     body("place", "Minimum 1 character").trim().isLength({ min: 1 }),
-    body("place", "Maximum 100 characters").trim().isLength({ max: 100 }),
     body("eventType", "Minimum 5 characters").trim().isLength({ min: 5 }),
     body("eventType", "Maximum 15 characters").trim().isLength({ max: 15 }),
     body("capacity", "Minumum 1 Maximum 99999 of capacity")
@@ -87,7 +86,6 @@ router.put(
     body("description", "Minimum 10 characters").trim().isLength({ min: 10 }),
     body("description", "Maximum 100 characters").trim().isLength({ max: 100 }),
     body("place", "Minimum 1 character").trim().isLength({ min: 1 }),
-    body("place", "Maximum 100 characters").trim().isLength({ max: 100 }),
     body("eventType", "Minimum 5 characters").trim().isLength({ min: 5 }),
     body("eventType", "Maximum 15 characters").trim().isLength({ max: 15 }),
     body("capacity", "Minumum 1 Maximum 99999 of capacity")
