@@ -19,7 +19,6 @@ import eventRouterPublic from "./src/routes/events.public.route.js";
 
 import "./src/database/connectMongo.js";
 import path from "path";
-import { Socket } from "dgram";
 
 const __dirname = path.resolve();
 
@@ -36,8 +35,8 @@ const limiter = rateLimit({
 //Middlewares
 app.use(cors());
 app.use(limiter);
-app.use(express.json({limit: '25mb'}));
-app.use(express.urlencoded({limit: '25mb'}));
+app.use(express.json({ limit: "25mb" }));
+app.use(express.urlencoded({ limit: "25mb" }));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -61,13 +60,13 @@ app.listen(port, () => console.log(`Api escuchando en puerto: ${port} ...`));
 const server = http.createServer(app);
 const io = new WebsocketServer(server);
 
-io.on('connection', (socket) => {
-  console.log("nueva conexion:",socket.id)
-  socket.emit("ping");
-  socket.on("pong",() =>{
-    console.log("recibido pong");
+io.on("connection", (socket) => {
+  console.log("nueva conexion:", socket.id);
+  socket.on("chat message", (msg) => {
+    console.log("message: " + msg);
   });
 });
 
-
-server.listen(3002, () => console.log(`Socket.io escuchando en puerto: 3002 ...`));
+server.listen(3002, () =>
+  console.log(`Socket.io escuchando en puerto: 3002 ...`)
+);
