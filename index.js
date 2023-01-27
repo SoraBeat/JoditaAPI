@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
+import { Server as WebsocketServer } from "socket.io";
+import http from "http";
 
 import userRouter from "./src/routes/user.route.js";
 import premiumRouter from "./src/routes/premium.route.js";
@@ -33,8 +35,8 @@ const limiter = rateLimit({
 //Middlewares
 app.use(cors());
 app.use(limiter);
-app.use(express.json({limit: '25mb'}));
-app.use(express.urlencoded({limit: '25mb'}));
+app.use(express.json({ limit: "25mb" }));
+app.use(express.urlencoded({ limit: "25mb" }));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -53,3 +55,18 @@ app.use("/api/public", eventRouterPublic);
 //MongoDB Conecction
 app.get("/", (req, res) => res.sendFile(path.join(__dirname, "./index.html")));
 app.listen(port, () => console.log(`Api escuchando en puerto: ${port} ...`));
+
+//Socket Conecction
+const server = http.createServer(app);
+const io = new WebsocketServer(server);
+
+io.on("connection", (socket) => {
+  console.log("nueva conexion:", socket.id);
+  socket.on("chat message", (msg) => {
+    console.log("message: " + msg);
+  });
+});
+
+server.listen(3002, () =>
+  console.log(`Socket.io escuchando en puerto: 3002 ...`)
+);
