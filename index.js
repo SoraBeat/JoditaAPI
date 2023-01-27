@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
+import { Server as WebsocketServer } from "socket.io";
+import http from "http";
 
 import userRouter from "./src/routes/user.route.js";
 import premiumRouter from "./src/routes/premium.route.js";
@@ -17,6 +19,7 @@ import eventRouterPublic from "./src/routes/events.public.route.js";
 
 import "./src/database/connectMongo.js";
 import path from "path";
+import { Socket } from "dgram";
 
 const __dirname = path.resolve();
 
@@ -53,3 +56,18 @@ app.use("/api/public", eventRouterPublic);
 //MongoDB Conecction
 app.get("/", (req, res) => res.sendFile(path.join(__dirname, "./index.html")));
 app.listen(port, () => console.log(`Api escuchando en puerto: ${port} ...`));
+
+//Socket Conecction
+const server = http.createServer(app);
+const io = new WebsocketServer(server);
+
+io.on('connection', (socket) => {
+  console.log("nueva conexion:",socket.id)
+  socket.emit("ping");
+  socket.on("pong",() =>{
+    console.log("recibido pong");
+  });
+});
+
+
+server.listen(3002, () => console.log(`Socket.io escuchando en puerto: 3002 ...`));
