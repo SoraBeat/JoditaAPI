@@ -64,6 +64,9 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
+  socket.on("message", (msg) => {
+    socket.emit(msg);
+  });
 });
 
 server.listen(port, () => console.log("Server listening on port " + port));
