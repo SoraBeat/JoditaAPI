@@ -60,9 +60,8 @@ import { Server } from "socket.io";
 const io = new Server(server);
 
 io.on("connection", (socket) => {
-  console.log("new user connected to the chat");
   socket.on("message", (msg) => {
-    socket.emit(msg);
+    socket.emit("message", msg);
   });
 });
 
