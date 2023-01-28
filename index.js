@@ -64,6 +64,7 @@ io.on("connection", (socket) => {
   console.log("nueva conexion:", socket.id);
   socket.on("chat message", (msg) => {
     console.log("message: " + msg);
+    socket.emit("chat message", msg);
   });
 });
 
