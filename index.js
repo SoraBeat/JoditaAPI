@@ -32,6 +32,18 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
+//Socket Conecction
+const server = http.createServer(app);
+const io = new WebsocketServer({ server: server });
+
+io.on("connection", (socket) => {
+  console.log("nueva conexion:", socket.id);
+  socket.on("chat message", (msg) => {
+    console.log("message: " + msg);
+    socket.emit("chat message", msg);
+  });
+});
+
 //Middlewares
 app.use(cors());
 app.use(limiter);
@@ -54,20 +66,7 @@ app.use("/api/public", eventRouterPublic);
 
 //MongoDB Conecction
 app.get("/", (req, res) => res.sendFile(path.join(__dirname, "./index.html")));
-app.listen(port, () => console.log(`Api escuchando en puerto: ${port} ...`));
 
-//Socket Conecction
-const server = http.createServer(app);
-const io = new WebsocketServer(server);
-
-io.on("connection", (socket) => {
-  console.log("nueva conexion:", socket.id);
-  socket.on("chat message", (msg) => {
-    console.log("message: " + msg);
-    socket.emit("chat message", msg);
-  });
-});
-
-server.listen(3002, () =>
-  console.log(`Socket.io escuchando en puerto: 3002 ...`)
+server.listen(port, () =>
+  console.log(`Servidor escuchando en puerto: ${port} ...`)
 );
