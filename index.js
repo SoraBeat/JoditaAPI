@@ -38,9 +38,9 @@ const io = new WebsocketServer({ server: server });
 
 io.on("connection", (socket) => {
   console.log("nueva conexion:", socket.id);
-  socket.on("chat message", (msg) => {
+  socket.on("message", (msg) => {
     console.log("message: " + msg);
-    socket.emit("chat message", msg);
+    socket.send("message", msg);
   });
 });
 
