@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
-import WebSocket, { WebSocketServer } from "ws";
 
 import userRouter from "./src/routes/user.route.js";
 import premiumRouter from "./src/routes/premium.route.js";
@@ -51,18 +50,20 @@ app.use("/api/public", followRouterPublic);
 app.use("/api/public", reportRouterPublic);
 app.use("/api/public", eventRouterPublic);
 
-//Web socket
-const wss = new WebSocketServer({ port: 8080 });
-
-wss.on("connection", function connection(ws) {
-  console.log("Cliente conectado!");
-
-  ws.on("message", function message(msg) {
-    ws.send(msg);
-  });
-});
-
 //MongoDB Conecction
 app.get("/", (req, res) => res.sendFile(path.join(__dirname, "./index.html")));
 
-app.listen(port, () => console.log("Server listening on port " + port));
+//Web socket
+import http from "http";
+const server = http.createServer(app);
+import { Server } from "socket.io";
+const io = new Server(server);
+
+io.on("connection", (socket) => {
+  console.log("new user connected to the chat");
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
+});
+
+server.listen(port, () => console.log("Server listening on port " + port));
