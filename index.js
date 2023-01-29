@@ -54,9 +54,10 @@ app.use("/api/public", eventRouterPublic);
 app.get("/", (req, res) => res.sendFile(path.join(__dirname, "./index.html")));
 
 //Web socket
-import http from "http";
-const server = http.createServer(app);
-import { Server } from "socket.io";
+import { createServer } from "http";
+import Server from "socket.io";
+
+const server = createServer(app);
 const io = new Server(server);
 
 io.on("connection", (socket) => {
