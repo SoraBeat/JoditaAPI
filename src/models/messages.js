@@ -5,10 +5,17 @@ const messageContent = new Schema({
     type: Schema.Types.ObjectId,
     require: true,
   },
+  userName: {
+    type: String,
+    require: true,
+  },
+  image: {
+    type: String,
+    default: null,
+    trim: true,
+  },
   content: {
     type: String,
-    maxlength: 250,
-    minlength: 1,
     trim: true,
     require: true,
   },

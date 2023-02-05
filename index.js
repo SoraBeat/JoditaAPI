@@ -14,6 +14,7 @@ import userRouterPublic from "./src/routes/user.public.route.js";
 import followRouterPublic from "./src/routes/follow.public.route.js";
 import reportRouterPublic from "./src/routes/reports.public.route.js";
 import eventRouterPublic from "./src/routes/events.public.route.js";
+import messageRouterPublic from "./src/routes/messages.public.route.js";
 
 import "./src/database/connectMongo.js";
 import path from "path";
@@ -49,21 +50,9 @@ app.use("/api/public", userRouterPublic);
 app.use("/api/public", followRouterPublic);
 app.use("/api/public", reportRouterPublic);
 app.use("/api/public", eventRouterPublic);
+app.use("/api/public", messageRouterPublic);
 
 //MongoDB Conecction
 app.get("/", (req, res) => res.sendFile(path.join(__dirname, "./index.html")));
 
-//Web socket
-import { createServer } from "http";
-import Server from "socket.io";
-
-const server = createServer(app);
-const io = new Server(server);
-
-io.on("connection", (socket) => {
-  socket.on("message", (msg) => {
-    socket.emit("message", msg);
-  });
-});
-
-server.listen(port, () => console.log("Server listening on port " + port));
+app.listen(port, () => console.log("Server listening on port " + port));
