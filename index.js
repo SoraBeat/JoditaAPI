@@ -15,6 +15,7 @@ import followRouterPublic from "./src/routes/follow.public.route.js";
 import reportRouterPublic from "./src/routes/reports.public.route.js";
 import eventRouterPublic from "./src/routes/events.public.route.js";
 import messageRouterPublic from "./src/routes/messages.public.route.js";
+import bellRouterPublic from "./src/routes/bell.public.route.js";
 
 import "./src/database/connectMongo.js";
 import path from "path";
@@ -51,6 +52,7 @@ app.use("/api/public", followRouterPublic);
 app.use("/api/public", reportRouterPublic);
 app.use("/api/public", eventRouterPublic);
 app.use("/api/public", messageRouterPublic);
+app.use("/api/public", bellRouterPublic);
 
 //MongoDB Conecction
 app.get("/", (req, res) => res.sendFile(path.join(__dirname, "./index.html")));
